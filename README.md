@@ -25,3 +25,21 @@
 
 ## 정보
 GitPage: 업데이트 예정
+
+## Install dependencies
+
+```bash
+npm install
+```
+
+## Run Todo Page
+
+```bash
+npm start
+```
+## Run tests
+
+```bash
+# Run tests
+npm test
+```

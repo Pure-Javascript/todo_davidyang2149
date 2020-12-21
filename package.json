@@ -1,0 +1,27 @@
+{
+  "name": "todo_davidyang2149",
+  "version": "0.0.1",
+  "description": "pure javascript - Todo App",
+  "main": "index.js",
+  "scripts": {
+    "start": "open -a \"Google Chrome\" index.html",
+    "test": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidYang2149/todo_davidyang2149.git"
+  },
+  "keywords": [
+    "todo",
+    "javascript"
+  ],
+  "bugs": {
+    "url": "https://github.com/Pure-Javascript/todo_davidyang2149/issues"
+  },
+  "homepage": "https://github.com/DavidYang2149/todo_davidyang2149#readme",
+  "author": "davidyang2149",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
