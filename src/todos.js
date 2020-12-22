@@ -1,9 +1,13 @@
 const addTodo = () => {
-  const newTodoInput = document.getElementById('newTodo');
-  let currentTodoList = document.getElementById('todoList').innerHTML;
-  currentTodoList += `<li>${newTodoInput.value}</li>`;
-  document.getElementById('todoList').innerHTML = currentTodoList;
-  newTodoInput.value = '';
+  const newTodoTitle = document.getElementById('title');
+  const newTodoContent = document.getElementById('content');
+
+  let currentTodos = document.getElementById('todos').innerHTML;
+  currentTodos += `<li>Title: ${newTodoTitle.value} / Content: ${newTodoContent.value}</li>`;
+  document.getElementById('todos').innerHTML = currentTodos;
+
+  newTodoTitle.value = '';
+  newTodoContent.value = '';
 }
 
 const addTodoButton = document.getElementById('addTodo');
