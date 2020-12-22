@@ -1,22 +1,32 @@
-
 describe('Todos', () => {
-  test('Check addTodo able add todo to todoList', () => {
+  test('Check addTodo able add todo to todos', () => {
     document.body.innerHTML = `
-    <input id="newTodo" />
+    <div>
+      <label for="title">Title</label>
+      <input type="text" id="title" />
+    </div>
+    <div>
+      <label for="content">Content</label>
+      <input type="text" id="content" />
+    </div>
+
     <button id="addTodo">Add todo</button>
-    <ol id="todoList"></ol>
+    <ol id="todos"></ol>
     `;
 
-    const newTodo = document.getElementById('newTodo');
+    const title = document.getElementById('title');
+    const content = document.getElementById('content');
     const addTodo = document.getElementById('addTodo');
-    const todolist = document.getElementById('todoList');
+    const todos = document.getElementById('todos');
 
     require('./todos.js');
 
-    newTodo.value = 'New todolist!';
+    title.value = 'New todo title!';
+    content.value = 'New todo content!';
+
     addTodo.click();
 
-    expect(todolist.innerHTML).toBe('<li>New todolist!</li>');
+    expect(todos.innerHTML).toBe('<li>Title: New todo title! / Content: New todo content!</li>');
   });
 
 });

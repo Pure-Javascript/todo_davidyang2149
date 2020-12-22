@@ -5,9 +5,17 @@
     <title>Todo App</title>
   </head>
   <body>
-    <input id="newTodo" />
+    <div>
+      <label for="title">Title</label>
+      <input type="text" id="title" />
+    </div>
+    <div>
+      <label for="content">Content</label>
+      <input type="text" id="content" />
+    </div>
+
     <button id="addTodo">Add todo</button>
-    <ol id="todoList"></ol>
+    <ol id="todos"></ol>
 
     <script type="text/javascript" src="./src/todos.js"></script>
   </body>
