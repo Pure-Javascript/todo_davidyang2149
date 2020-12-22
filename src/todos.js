@@ -1,14 +1,16 @@
-const addTodo = () => {
-  const newTodoTitle = document.getElementById('title');
-  const newTodoContent = document.getElementById('content');
+const getId = (value) => document.getElementById(value);
 
-  let currentTodos = document.getElementById('todos').innerHTML;
+const addTodo = () => {
+  const newTodoTitle = getId('title');
+  const newTodoContent = getId('content');
+
+  let currentTodos = getId('todos').innerHTML;
   currentTodos += `<li>Title: ${newTodoTitle.value} / Content: ${newTodoContent.value}</li>`;
-  document.getElementById('todos').innerHTML = currentTodos;
+  getId('todos').innerHTML = currentTodos;
 
   newTodoTitle.value = '';
   newTodoContent.value = '';
 }
 
-const addTodoButton = document.getElementById('addTodo');
+const addTodoButton = getId('addTodo');
 addTodoButton.addEventListener('click', addTodo);
