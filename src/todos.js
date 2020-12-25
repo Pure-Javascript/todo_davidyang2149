@@ -1,7 +1,6 @@
 const getId = (value) => document.getElementById(value);
-
-const isBlank = (target) => getId(target).value.trim().length === 0;
 const getFocus = (target) => getId(target).focus();
+const isBlank = (target) => getId(target).value.trim().length === 0;
 
 const addTodo = () => {
   const title = 'title';

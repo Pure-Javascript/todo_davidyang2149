@@ -1,26 +1,27 @@
-const context = global;
+const getId = (value) => document.getElementById(value);
 
 describe('Todos', () => {
-  describe('with title & content', () => {
-    test('addTodo into todos', () => {
-      document.body.innerHTML = `
-      <div>
-        <label for="title">Title</label>
-        <input type="text" id="title" />
-      </div>
-      <div>
-        <label for="content">Content</label>
-        <input type="text" id="content" />
-      </div>
-  
-      <button id="addTodo">Add todo</button>
-      <ol id="todos"></ol>
-      `;
+  const indexPage = `
+  <div>
+    <label for="title">Title</label>
+    <input type="text" id="title" />
+  </div>
+  <div>
+    <label for="content">Content</label>
+    <input type="text" id="content" />
+  </div>
 
-      const title = document.getElementById('title');
-      const content = document.getElementById('content');
-      const addTodo = document.getElementById('addTodo');
-      const todos = document.getElementById('todos');
+  <button id="addTodo">Add todo</button>
+  <ol id="todos"></ol>
+  `;
+
+  describe('with title & content', () => {
+    test('success addTodo into todos', () => {
+      document.body.innerHTML = indexPage;
+      const title = getId('title');
+      const content = getId('content');
+      const addTodo = getId('addTodo');
+      const todos = getId('todos');
 
       require('./todos.js');
 
@@ -34,25 +35,12 @@ describe('Todos', () => {
   });
 
   describe('without title & content', () => {
-    test('addTodo into todos', () => {
-      document.body.innerHTML = `
-      <div>
-        <label for="title">Title</label>
-        <input type="text" id="title" />
-      </div>
-      <div>
-        <label for="content">Content</label>
-        <input type="text" id="content" />
-      </div>
-  
-      <button id="addTodo">Add todo</button>
-      <ol id="todos"></ol>
-      `;
-
-      const title = document.getElementById('title');
-      const content = document.getElementById('content');
-      const addTodo = document.getElementById('addTodo');
-      const todos = document.getElementById('todos');
+    test('failed addTodo into todos', () => {
+      document.body.innerHTML = indexPage;
+      const title = getId('title');
+      const content = getId('content');
+      const addTodo = getId('addTodo');
+      const todos = getId('todos');
 
       require('./todos.js');
 
