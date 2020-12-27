@@ -35,19 +35,19 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
       return getFocus(content);
     }
 
-    const newTodoTitle = getId(title);
-    const newTodoContent = getId(content);
+    const titleId = getId(title);
+    const contentId = getId(content);
 
     let currentTodos = getId('todos').innerHTML;
-    currentTodos += `<li>Title: ${newTodoTitle.value} / Content: ${newTodoContent.value}</li>`;
+    currentTodos += `<li>Title: ${titleId.value} / Content: ${contentId.value}</li>`;
     getId('todos').innerHTML = currentTodos;
 
     setTodoStorage([...getTodosStorage,
-    { title: newTodoTitle.value, content: newTodoContent.value }
+    { title: titleId.value, content: contentId.value }
     ]);
 
-    newTodoTitle.value = '';
-    newTodoContent.value = '';
+    titleId.value = '';
+    contentId.value = '';
   }
 
   // Initial Data
