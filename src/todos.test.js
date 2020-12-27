@@ -15,6 +15,8 @@ describe('Todos', () => {
   <ol id="todos"></ol>
   `;
 
+  JSON.parse = jest.fn().mockImplementationOnce(() => { });
+
   describe('with title & content', () => {
     test('success addTodo into todos', () => {
       document.body.innerHTML = indexPage;
