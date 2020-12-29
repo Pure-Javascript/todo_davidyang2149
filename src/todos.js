@@ -9,16 +9,24 @@ const toStringify = (value) => JSON.stringify(value);
 const getLocalStorage = (key) => localStorage.getItem(key);
 const setLocalStorage = (types) => (key) => (value) => (localStorage.setItem(key, types(value)));
 
-const getTodosStorage = toJSON(getLocalStorage('todos')) || [];
 const setTodoStorage = setLocalStorage(toStringify)('todos');
 
 (() => {
   // load Todos
   const loadTodos = () => {
-    const initTodos = getTodosStorage;
+    const initTodos = toJSON(getLocalStorage('todos')) || [];
+    let todos = '';
+    initTodos.map((todo) => todos += `
+      <li id=${todo.id}>
+        Title: ${todo.title} / Content: ${todo.content}
+        <label>
+          <input type="checkbox" ${todo.done && 'checked'}/>
+          Complete
+        </label>
+      </li>
+    `);
 
-    let todos = getId('todos').innerHTML;
-    initTodos.map((todo) => todos += `<li>Title: ${todo.title} / Content: ${todo.content}</li>`);
+    getId('todos').innerHTML = '';
     getId('todos').innerHTML = todos;
   }
 
@@ -38,16 +46,21 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
     const titleId = getId(title);
     const contentId = getId(content);
 
-    let currentTodos = getId('todos').innerHTML;
-    currentTodos += `<li>Title: ${titleId.value} / Content: ${contentId.value}</li>`;
-    getId('todos').innerHTML = currentTodos;
+    const initTodos = toJSON(getLocalStorage('todos')) || [];
 
-    setTodoStorage([...getTodosStorage,
-    { title: titleId.value, content: contentId.value }
+    setTodoStorage([...initTodos,
+    {
+      id: new Date().toISOString(),
+      title: titleId.value,
+      content: contentId.value,
+      done: false,
+    }
     ]);
 
     titleId.value = '';
     contentId.value = '';
+
+    loadTodos();
   }
 
   // Initial Data
