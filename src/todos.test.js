@@ -1,18 +1,19 @@
 const getId = (value) => document.getElementById(value);
+const getClasses = (value) => document.getElementsByClassName(value);
 
 describe('Todos', () => {
   const indexPage = `
-    <div>
-      <label for="title">Title</label>
-      <input type="text" id="title" />
-    </div>
-    <div>
-      <label for="content">Content</label>
-      <input type="text" id="content" />
-    </div>
-
-    <button id="addTodo">Add todo</button>
-    <ol id="todos"></ol>
+  <div>
+    <label for="title">Title</label>
+    <input type="text" id="title" />
+  </div>
+  <div>
+    <label for="content">Content</label>
+    <input type="text" id="content" />
+  </div>
+  
+  <button id="addTodo">Add todo</button>
+  <ol id="todos"></ol>
   `;
 
   JSON.parse = jest.fn().mockImplementationOnce(() => { });
@@ -23,6 +24,7 @@ describe('Todos', () => {
       const title = getId('title');
       const content = getId('content');
       const addTodo = getId('addTodo');
+      const todos = getId('todos');
 
       require('./todos.js');
 
@@ -31,11 +33,7 @@ describe('Todos', () => {
 
       addTodo.click();
 
-      // Dom rerender
-      setTimeout(() => {
-        const todos = getId('todos');
-        expect(todos.innerHTML).toBe('<li>Title: New todo title! / Content: New todo content!</li>');
-      }, 1000)
+      expect(todos).toBe('<li>Title: New todo title! / Content: New todo content!</li>');
     });
   });
 
@@ -53,10 +51,32 @@ describe('Todos', () => {
 
       addTodo.click();
 
-      setTimeout(() => {
-        const todos = getId('todos');
-        expect(todos.innerHTML).toBe('<li>Title: New todo title! / Content: New todo content!</li>');
-      }, 1000)
+      const todos = getId('todos');
+      expect(todos.innerHTML).toBe('');
+    });
+  });
+
+  describe('complete task', () => {
+    test('click complete', () => {
+      document.body.innerHTML = indexPage;
+      const todos = getId('todos');
+
+      todos.innerHTML = `
+        <li id="1">
+        Title: New todo title! / Content: New todo content!
+          <label>
+            <input class="done" type="checkbox"  data-id="1" />
+            Complete
+          </label>
+        </li>
+      `;
+
+      require('./todos.js');
+
+      const doneButton = getClasses('done')[0];
+
+      doneButton.click();
+      expect(doneButton.value).toBe('on');
     });
   });
 });
