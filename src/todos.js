@@ -1,5 +1,8 @@
 // utils
 const getId = (value) => document.getElementById(value);
+const getClasses = (value) => document.getElementsByClassName(value);
+const getSelector = (value) => document.querySelectorAll(value);
+
 const getFocus = (target) => getId(target).focus();
 const isBlank = (target) => getId(target).value.trim().length === 0;
 
@@ -16,18 +19,28 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
   const loadTodos = () => {
     const initTodos = toJSON(getLocalStorage('todos')) || [];
     let todos = '';
-    initTodos.map((todo) => todos += `
+    // map과 forEach의 차이점: 반환값 (map: 반환값이 존재(undefined가 발생할 수 있음 - 리턴), forEach: 반환값이 없음(행동))
+    // map에서 forEach로 변경
+    initTodos.forEach((todo) => todos += `
       <li id=${todo.id}>
-        Title: ${todo.title} / Content: ${todo.content}
-        <label>
-          <input type="checkbox" ${todo.done && 'checked'}/>
-          Complete
-        </label>
+        <div>
+          Title: ${todo.title} / Content: ${todo.content}
+          <label>
+            <input class="done" type="checkbox" ${todo.done && 'checked'} data-id=${todo.id} />
+            Complete
+          </label>
+        </div>
       </li>
     `);
 
     getId('todos').innerHTML = '';
     getId('todos').innerHTML = todos;
+
+    const addTodoButton = getId('addTodo');
+    addTodoButton.addEventListener('click', addTodo);
+
+    const doneButton = document.querySelectorAll('.done');
+    doneButton.forEach(done => done.addEventListener('click', () => completeTodo(done.getAttribute('data-id'))));
   }
 
   // add Todo
@@ -47,7 +60,6 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
     const contentId = getId(content);
 
     const initTodos = toJSON(getLocalStorage('todos')) || [];
-
     setTodoStorage([...initTodos,
     {
       id: new Date().toISOString(),
@@ -63,9 +75,16 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
     loadTodos();
   }
 
+  // complete task
+  const completeTodo = (id) => {
+    const initTodos = toJSON(getLocalStorage('todos')) || [];
+    setTodoStorage(
+      initTodos.map((todo) => todo.id === id ? { ...todo, done: !todo.done } : todo)
+    );
+
+    loadTodos();
+  }
+
   // Initial Data
   loadTodos();
-
-  const addTodoButton = getId('addTodo');
-  addTodoButton.addEventListener('click', addTodo);
 })();
