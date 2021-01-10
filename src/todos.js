@@ -24,6 +24,14 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
     initTodos.forEach((todo) => todos += `
       <li id=${todo.id}>
         <div class="viewPage">
+          <label for="priority-${todo.id}">Priority</label>
+          <select class="priorityChange" id="priority-${todo.id}" data-id="${todo.id}">
+            <option value="0" ${todo.priority === '0' && 'selected'}>기본</option>
+            <option value="1" ${todo.priority === '1' && 'selected'}>높음</option>
+            <option value="2" ${todo.priority === '2' && 'selected'}>보통</option>
+            <option value="3" ${todo.priority === '3' && 'selected'}>낮음</option>
+          </select>
+          /
           Title: ${todo.title} / Content: ${todo.content}
           <label>
           <input class="done" type="checkbox" ${todo.done && 'checked'} data-id="${todo.id}" />
@@ -63,6 +71,9 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
 
     const deleteButton = getSelectorAll('.delete');
     deleteButton.forEach(done => done.addEventListener('click', () => deleteTodo(done.getAttribute('data-id'))));
+
+    const priorityChange = getSelectorAll('.priorityChange');
+    priorityChange.forEach(done => done.addEventListener('change', () => priorityChangeTodo(done.getAttribute('data-id'))(done.value)));
   }
 
   // add Todo
@@ -80,6 +91,7 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
 
     const titleId = getId(title);
     const contentId = getId(content);
+    const priorityId = getId('priority');
 
     const initTodos = toJSON(getLocalStorage('todos')) || [];
     setTodoStorage([...initTodos,
@@ -88,6 +100,7 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
       title: titleId.value,
       content: contentId.value,
       done: false,
+      priority: priorityId.value,
     }
     ]);
 
@@ -159,6 +172,16 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
 
     const initTodos = toJSON(getLocalStorage('todos')) || [];
     setTodoStorage(initTodos.filter(todo => todo.id !== id));
+
+    loadTodos();
+  }
+
+  // priority change
+  const priorityChangeTodo = (id) => (value) => {
+    const initTodos = toJSON(getLocalStorage('todos')) || [];
+    setTodoStorage(
+      initTodos.map((todo) => todo.id === id ? { ...todo, priority: value } : todo)
+    );
 
     loadTodos();
   }
