@@ -32,7 +32,11 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
             <option value="3" ${todo.priority === '3' && 'selected'}>낮음</option>
           </select>
           /
+          <label for="deadline-${todo.id}">Deadline</label>
+          <input class="deadline" type="date" id="deadline-${todo.id}" value="${todo.deadline || ''}" data-id="${todo.id}" />
+          /
           Title: ${todo.title} / Content: ${todo.content}
+          /
           <label>
           <input class="done" type="checkbox" ${todo.done && 'checked'} data-id="${todo.id}" />
           Complete
@@ -74,6 +78,9 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
 
     const priorityChange = getSelectorAll('.priorityChange');
     priorityChange.forEach(done => done.addEventListener('change', () => priorityChangeTodo(done.getAttribute('data-id'))(done.value)));
+
+    const deadlineChange = getSelectorAll('.deadline');
+    deadlineChange.forEach(done => done.addEventListener('change', () => deadlineChangeTodo(done.getAttribute('data-id'))(done.value)));
   }
 
   // add Todo
@@ -92,6 +99,7 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
     const titleId = getId(title);
     const contentId = getId(content);
     const priorityId = getId('priority');
+    const deadlineId = getId('deadline');
 
     const initTodos = toJSON(getLocalStorage('todos')) || [];
     setTodoStorage([...initTodos,
@@ -101,11 +109,14 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
       content: contentId.value,
       done: false,
       priority: priorityId.value,
+      deadline: deadlineId.value,
     }
     ]);
 
     titleId.value = '';
     contentId.value = '';
+    priorityId.value = '0';
+    deadlineId.value = '';
 
     loadTodos();
   }
@@ -181,6 +192,16 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
     const initTodos = toJSON(getLocalStorage('todos')) || [];
     setTodoStorage(
       initTodos.map((todo) => todo.id === id ? { ...todo, priority: value } : todo)
+    );
+
+    loadTodos();
+  }
+
+  // deadline change
+  const deadlineChangeTodo = (id) => (value) => {
+    const initTodos = toJSON(getLocalStorage('todos')) || [];
+    setTodoStorage(
+      initTodos.map((todo) => todo.id === id ? { ...todo, deadline: value } : todo)
     );
 
     loadTodos();
