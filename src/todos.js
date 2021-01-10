@@ -1,7 +1,7 @@
 // utils
 const getId = (value) => document.getElementById(value);
 const getClasses = (value) => document.getElementsByClassName(value);
-const getSelector = (value) => document.querySelectorAll(value);
+const getSelectorAll = (value) => document.querySelectorAll(value);
 
 const getFocus = (target) => getId(target).focus();
 const isBlank = (target) => getId(target).value.trim().length === 0;
@@ -30,6 +30,7 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
           Complete
           </label>
           <button class="open" data-id="${todo.id}">Edit</button>
+          <button class="delete" data-id="${todo.id}">Delete</button>
         </div>
         <div class="editPage hidden">
           <label for="title-${todo.id}">Title</label>
@@ -48,17 +49,20 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
     const addTodoButton = getId('addTodo');
     addTodoButton.addEventListener('click', addTodo);
 
-    const doneButton = document.querySelectorAll('.done');
+    const doneButton = getSelectorAll('.done');
     doneButton.forEach(done => done.addEventListener('click', () => completeTodo(done.getAttribute('data-id'))));
 
-    const openEditButton = document.querySelectorAll('.open');
+    const openEditButton = getSelectorAll('.open');
     openEditButton.forEach(done => done.addEventListener('click', () => openEdit(done.getAttribute('data-id'))));
 
-    const closeEditButton = document.querySelectorAll('.close');
+    const closeEditButton = getSelectorAll('.close');
     closeEditButton.forEach(done => done.addEventListener('click', () => closeEdit(done.getAttribute('data-id'))));
 
-    const editButton = document.querySelectorAll('.edit');
+    const editButton = getSelectorAll('.edit');
     editButton.forEach(done => done.addEventListener('click', () => updateTodo(done.getAttribute('data-id'))));
+
+    const deleteButton = getSelectorAll('.delete');
+    deleteButton.forEach(done => done.addEventListener('click', () => deleteTodo(done.getAttribute('data-id'))));
   }
 
   // add Todo
@@ -105,8 +109,8 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
 
   // open edit
   const openEdit = (id) => {
-    getSelector('.viewPage').forEach(edit => edit.classList.remove('hidden'));
-    getSelector('.editPage').forEach(edit => edit.classList.add('hidden'));
+    getSelectorAll('.viewPage').forEach(edit => edit.classList.remove('hidden'));
+    getSelectorAll('.editPage').forEach(edit => edit.classList.add('hidden'));
 
     getId(id).childNodes[1].classList.add('hidden');
     getId(id).childNodes[3].classList.remove('hidden');
@@ -143,6 +147,18 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
 
     titleId.value = '';
     contentId.value = '';
+
+    loadTodos();
+  }
+
+  // delete task
+  const deleteTodo = (id) => {
+    if (!confirm('Are you sure to delete?')) {
+      return false;
+    }
+
+    const initTodos = toJSON(getLocalStorage('todos')) || [];
+    setTodoStorage(initTodos.filter(todo => todo.id !== id));
 
     loadTodos();
   }
