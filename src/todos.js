@@ -26,44 +26,60 @@ const eventAddWithCurry = (target) => (type) => (func) => (value) => {
   const loadTodos = () => {
     const initTodos = toJSON(getLocalStorage('todos')) || [];
     let todos = '';
+    let deadlineNotice = '';
     // map과 forEach의 차이점: 반환값 (map: 반환값이 존재(undefined가 발생할 수 있음 - 리턴), forEach: 반환값이 없음(행동))
     // map에서 forEach로 변경
-    initTodos.forEach((todo) => todos += `
-      <li id=${todo.id}>
-        <div class="viewPage">
-          <label for="priority-${todo.id}">Priority</label>
-          <select class="priorityChange" id="priority-${todo.id}" data-id="${todo.id}">
-            <option value="0" ${todo.priority === '0' && 'selected'}>기본</option>
-            <option value="1" ${todo.priority === '1' && 'selected'}>높음</option>
-            <option value="2" ${todo.priority === '2' && 'selected'}>보통</option>
-            <option value="3" ${todo.priority === '3' && 'selected'}>낮음</option>
-          </select>
-          /
-          <label for="deadline-${todo.id}">Deadline</label>
-          <input class="deadline" type="date" id="deadline-${todo.id}" value="${todo.deadline || ''}" data-id="${todo.id}" />
-          /
-          Title: ${todo.title} / Content: ${todo.content}
-          /
-          <label>
-          <input class="done" type="checkbox" ${todo.done && 'checked'} data-id="${todo.id}" />
-          Complete
-          </label>
-          <button class="open" data-id="${todo.id}">Edit</button>
-          <button class="delete" data-id="${todo.id}">Delete</button>
-        </div>
-        <div class="editPage hidden">
-          <label for="title-${todo.id}">Title</label>
-          <input type="text" id="title-${todo.id}" value="${todo.title}" />
-          <label for="content-${todo.id}">Content</label>
-          <input type="text" id="content-${todo.id}" value="${todo.content}" />
-          <button class="edit" data-id="${todo.id}">Update</button>
-          <button class="close" data-id="${todo.id}">Close</button>
-        </div>
-      </li>
-    `);
+    initTodos.forEach((todo) => {
+      todos +=
+        `
+        <li id=${todo.id}>
+          <div class="viewPage">
+            <label for="priority-${todo.id}">Priority</label>
+            <select class="priorityChange" id="priority-${todo.id}" data-id="${todo.id}">
+              <option value="0" ${todo.priority === '0' && 'selected'}>기본</option>
+              <option value="1" ${todo.priority === '1' && 'selected'}>높음</option>
+              <option value="2" ${todo.priority === '2' && 'selected'}>보통</option>
+              <option value="3" ${todo.priority === '3' && 'selected'}>낮음</option>
+            </select>
+            /
+            <label for="deadline-${todo.id}">Deadline</label>
+            <input class="deadline" type="date" id="deadline-${todo.id}" value="${todo.deadline || ''}" data-id="${todo.id}" />
+            /
+            Title: ${todo.title} / Content: ${todo.content}
+            /
+            <label>
+            <input class="done" type="checkbox" ${todo.done && 'checked'} data-id="${todo.id}" />
+            Complete
+            </label>
+            <button class="open" data-id="${todo.id}">Edit</button>
+            <button class="delete" data-id="${todo.id}">Delete</button>
+          </div>
+          <div class="editPage hidden">
+            <label for="title-${todo.id}">Title</label>
+            <input type="text" id="title-${todo.id}" value="${todo.title}" />
+            <label for="content-${todo.id}">Content</label>
+            <input type="text" id="content-${todo.id}" value="${todo.content}" />
+            <button class="edit" data-id="${todo.id}">Update</button>
+            <button class="close" data-id="${todo.id}">Close</button>
+          </div>
+        </li>
+      `;
+
+      if (Date.parse(todo.deadline) < new Date().getTime()) {
+        deadlineNotice +=
+          `
+        <li>
+          마감기한 종료 알림 / ${todo.title}
+        </li>
+        `
+      }
+    });
 
     getId('todos').innerHTML = '';
     getId('todos').innerHTML = todos;
+
+    getId('notice').innerHTML = '';
+    getId('notice').innerHTML = deadlineNotice;
 
     const addTodoButton = getId('addTodo');
     addTodoButton.addEventListener('click', addTodo);
