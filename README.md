@@ -96,3 +96,13 @@ npm test
 
 ##### removeEventListener 에 대해... 
 - 메모리 낭비를 없게 하기 위해 처리
+
+#### 2차 스터디
+
+##### Drag event
+- https://developer.mozilla.org/ko/docs/Web/API/Document/drag_event
+- 이벤트 만들어보기
+
+##### addEventListener
+- 값이 많아질 경우 addEventListener를 계속 갱신할 수 있을까?
+- 가장 상위에 addEventListener를 적용하면 예를 들어 ul에만 적용하면 하위 값이 변경되어도 addEventListener를 새롭게 생성할 필요가 없다.

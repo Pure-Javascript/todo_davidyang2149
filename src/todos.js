@@ -14,6 +14,13 @@ const setLocalStorage = (types) => (key) => (value) => (localStorage.setItem(key
 
 const setTodoStorage = setLocalStorage(toStringify)('todos');
 
+const eventAdd = (target) => (type) => (func) => (value) => {
+  getSelectorAll(target).forEach(done => done.addEventListener(type, () => func(done.getAttribute(value))));
+}
+const eventAddWithCurry = (target) => (type) => (func) => (value) => {
+  getSelectorAll(target).forEach(done => done.addEventListener(type, () => func(done.getAttribute(value))(done.value)));
+}
+
 (() => {
   // load Todos
   const loadTodos = () => {
@@ -61,26 +68,34 @@ const setTodoStorage = setLocalStorage(toStringify)('todos');
     const addTodoButton = getId('addTodo');
     addTodoButton.addEventListener('click', addTodo);
 
-    const doneButton = getSelectorAll('.done');
-    doneButton.forEach(done => done.addEventListener('click', () => completeTodo(done.getAttribute('data-id'))));
+    // const doneButton = getSelectorAll('.done');
+    // doneButton.forEach(done => done.addEventListener('click', () => completeTodo(done.getAttribute('data-id'))));
+    eventAdd('.done')('click')(completeTodo)('data-id');
 
-    const openEditButton = getSelectorAll('.open');
-    openEditButton.forEach(done => done.addEventListener('click', () => openEdit(done.getAttribute('data-id'))));
+    // const openEditButton = getSelectorAll('.open');
+    // openEditButton.forEach(done => done.addEventListener('click', () => openEdit(done.getAttribute('data-id'))));
+    eventAdd('.open')('click')(openEdit)('data-id');
 
-    const closeEditButton = getSelectorAll('.close');
-    closeEditButton.forEach(done => done.addEventListener('click', () => closeEdit(done.getAttribute('data-id'))));
+    // const closeEditButton = getSelectorAll('.close');
+    // closeEditButton.forEach(done => done.addEventListener('click', () => closeEdit(done.getAttribute('data-id'))));
+    eventAdd('.close')('click')(closeEdit)('data-id');
 
-    const editButton = getSelectorAll('.edit');
-    editButton.forEach(done => done.addEventListener('click', () => updateTodo(done.getAttribute('data-id'))));
+    // const editButton = getSelectorAll('.edit');
+    // editButton.forEach(done => done.addEventListener('click', () => updateTodo(done.getAttribute('data-id'))));
+    eventAdd('.edit')('click')(updateTodo)('data-id');
 
-    const deleteButton = getSelectorAll('.delete');
-    deleteButton.forEach(done => done.addEventListener('click', () => deleteTodo(done.getAttribute('data-id'))));
+    // const deleteButton = getSelectorAll('.delete');
+    // deleteButton.forEach(done => done.addEventListener('click', () => deleteTodo(done.getAttribute('data-id'))));
+    eventAdd('.delete')('click')(deleteTodo)('data-id');
 
-    const priorityChange = getSelectorAll('.priorityChange');
-    priorityChange.forEach(done => done.addEventListener('change', () => priorityChangeTodo(done.getAttribute('data-id'))(done.value)));
+    // const priorityChange = getSelectorAll('.priorityChange');
+    // priorityChange.forEach(done => done.addEventListener('change', () => priorityChangeTodo(done.getAttribute('data-id'))(done.value)));
+    eventAddWithCurry('.priorityChange')('change')(priorityChangeTodo)('data-id');
 
-    const deadlineChange = getSelectorAll('.deadline');
-    deadlineChange.forEach(done => done.addEventListener('change', () => deadlineChangeTodo(done.getAttribute('data-id'))(done.value)));
+    // const deadlineChange = getSelectorAll('.deadline');
+    // deadlineChange.forEach(done => done.addEventListener('change', () => deadlineChangeTodo(done.getAttribute('data-id'))(done.value)));
+    eventAddWithCurry('.deadline')('change')(deadlineChangeTodo)('data-id');
+
   }
 
   // add Todo
