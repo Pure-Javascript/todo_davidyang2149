@@ -29,6 +29,7 @@ const eventAddWithCurry = (target) => (type) => (func) => (value) => {
     let deadlineNotice = '';
     // map과 forEach의 차이점: 반환값 (map: 반환값이 존재(undefined가 발생할 수 있음 - 리턴), forEach: 반환값이 없음(행동))
     // map에서 forEach로 변경
+    const now = new Date().getTime();
     initTodos.forEach((todo) => {
       todos +=
         `
@@ -65,11 +66,13 @@ const eventAddWithCurry = (target) => (type) => (func) => (value) => {
         </li>
       `;
 
-      if (Date.parse(todo.deadline) < new Date().getTime()) {
+      if (todo.deadline && Date.parse(todo.deadline) < now) {
+        const overDay = Math.ceil(new Date(now - Date.parse(todo.deadline)) / (1000 * 3600 * 24)) - 1;
+
         deadlineNotice +=
           `
         <li>
-          마감기한 종료 알림 / ${todo.title}
+          마감일 알림 : ${overDay === 0 ? '당일' : overDay + '일 경과'} / ${todo.title}
         </li>
         `
       }
