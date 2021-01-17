@@ -30,11 +30,18 @@ const eventAddWithCurry = (target) => (type) => (func) => (value) => {
     // map과 forEach의 차이점: 반환값 (map: 반환값이 존재(undefined가 발생할 수 있음 - 리턴), forEach: 반환값이 없음(행동))
     // map에서 forEach로 변경
     const now = new Date().getTime();
-    initTodos.forEach((todo) => {
+    initTodos.forEach((todo, index) => {
       todos +=
         `
         <li id=${todo.id}>
-          <div class="viewPage">
+          <div>
+            <h2> Todo No. ${++index}</h2>
+            <label>
+              <input class="done" type="checkbox" ${todo.done && 'checked'} data-id="${todo.id}" />
+              Complete
+            </label>
+          </div>
+          <div>
             <label for="priority-${todo.id}">Priority</label>
             <select class="priorityChange" id="priority-${todo.id}" data-id="${todo.id}">
               <option value="0" ${todo.priority === '0' && 'selected'}>기본</option>
@@ -42,26 +49,38 @@ const eventAddWithCurry = (target) => (type) => (func) => (value) => {
               <option value="2" ${todo.priority === '2' && 'selected'}>보통</option>
               <option value="3" ${todo.priority === '3' && 'selected'}>낮음</option>
             </select>
-            /
+          </div>
+          <div>
             <label for="deadline-${todo.id}">Deadline</label>
             <input class="deadline" type="date" id="deadline-${todo.id}" value="${todo.deadline || ''}" data-id="${todo.id}" />
-            /
-            Title: ${todo.title} / Content: ${todo.content}
-            /
-            <label>
-            <input class="done" type="checkbox" ${todo.done && 'checked'} data-id="${todo.id}" />
-            Complete
-            </label>
-            <button class="open" data-id="${todo.id}">Edit</button>
-            <button class="delete" data-id="${todo.id}">Delete</button>
+          </div>
+          <div class="viewPage">
+            <div>
+              <label>Title</label>
+              <span>${todo.title}</span>
+            </div>
+            <div>
+              <label>Content</label>
+              <span>${todo.content}</span>
+            </div>
+            <div>
+              <button class="open" data-id="${todo.id}">Edit</button>
+              <button class="delete" data-id="${todo.id}">Delete</button>
+            </div>
           </div>
           <div class="editPage hidden">
-            <label for="title-${todo.id}">Title</label>
-            <input type="text" id="title-${todo.id}" value="${todo.title}" />
-            <label for="content-${todo.id}">Content</label>
-            <input type="text" id="content-${todo.id}" value="${todo.content}" />
-            <button class="edit" data-id="${todo.id}">Update</button>
-            <button class="close" data-id="${todo.id}">Close</button>
+            <div>
+              <label for="title-${todo.id}">Title</label>
+              <input class="fix" type="text" id="title-${todo.id}" value="${todo.title}" />
+            </div>
+            <div>
+              <label for="content-${todo.id}">Content</label>
+              <input class="fix" type="text" id="content-${todo.id}" value="${todo.content}" />
+            </div>
+            <div>
+              <button class="edit" data-id="${todo.id}">Update</button>
+              <button class="close" data-id="${todo.id}">Close</button>
+            </div>
           </div>
         </li>
       `;
@@ -72,7 +91,10 @@ const eventAddWithCurry = (target) => (type) => (func) => (value) => {
         deadlineNotice +=
           `
         <li>
-          마감일 알림 : ${overDay === 0 ? '당일' : overDay + '일 경과'} / ${todo.title}
+          <div>
+            <label>마감(${overDay === 0 ? 'D-Day' : '+' + overDay + 'Day'})</label>
+            <span>${todo.title}</span>
+          </div>
         </li>
         `
       }
@@ -170,13 +192,13 @@ const eventAddWithCurry = (target) => (type) => (func) => (value) => {
     getSelectorAll('.viewPage').forEach(edit => edit.classList.remove('hidden'));
     getSelectorAll('.editPage').forEach(edit => edit.classList.add('hidden'));
 
-    getId(id).childNodes[1].classList.add('hidden');
-    getId(id).childNodes[3].classList.remove('hidden');
+    getId(id).children[3].classList.add('hidden');
+    getId(id).children[4].classList.remove('hidden');
   }
 
   const closeEdit = (id) => {
-    getId(id).childNodes[1].classList.remove('hidden');
-    getId(id).childNodes[3].classList.add('hidden');
+    getId(id).children[3].classList.remove('hidden');
+    getId(id).children[4].classList.add('hidden');
   }
 
   // update task

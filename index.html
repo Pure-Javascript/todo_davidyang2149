@@ -6,33 +6,37 @@
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <div>
-      <label for="title">Title</label>
-      <input type="text" id="title" />
+    <div class="todos">
+      <h1>Todos</h1>
+      <div class="addTodos">
+        <h2>Add Todo</h2>
+        <div>
+          <label for="title">Title</label>
+          <input type="text" id="title" />
+        </div>
+        <div>
+          <label for="content">Content</label>
+          <input type="text" id="content" />
+        </div>
+        <div>
+          <label for="deadline">Deadline</label>
+          <input type="date" id="deadline" />
+        </div>
+        <div>
+          <label for="priority">Priority</label>
+          <select id="priority">
+            <option value="0">중요도</option>
+            <option value="1">높음</option>
+            <option value="2">보통</option>
+            <option value="3">낮음</option>
+          </select>
+        </div>
+        <button id="addTodo">Add Todo</button>
+      </div>
+      <ol id="notice"></ol>
+      <ol id="todos"></ol>
     </div>
-    <div>
-      <label for="content">Content</label>
-      <input type="text" id="content" />
-    </div>
-    <div>
-      <label for="priority">Priority</label>
-      <select id="priority">
-        <option value="0">중요도</option>
-        <option value="1">높음</option>
-        <option value="2">보통</option>
-        <option value="3">낮음</option>
-      </select>
-    </div>
-    <div>
-      <label for="deadline">Deadline</label>
-      <input type="date" id="deadline" />
-    </div>
-    
-
-    <button id="addTodo">Add todo</button>
-    <ol id="notice"></ol>
-    <ol id="todos"></ol>
-
+      
     <script type="text/javascript" src="./src/todos.js"></script>
   </body>
 </html>

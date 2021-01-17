@@ -1,3 +1,241 @@
 .hidden {
   display: none;
 }
+
+.todos {
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  width: 50%;
+  margin: 10px auto;
+  padding: 20px;
+}
+
+.addTodos {
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: #fafafa;
+  width: 70%;
+  margin: 10px auto;
+  padding: 15px;
+}
+
+.addTodos > button {
+  margin: 0.25rem;
+  padding: 0.5rem 1rem;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+
+  display: inline-block;
+  width: auto;
+  border: none;
+  border-radius: 4px;
+
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: 0.5s;
+
+  background: #0d6efd;
+  color: #ffffff;
+}
+
+.addTodos > button {
+  margin: 0.25rem;
+  padding: 0.5rem 1rem;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+
+  display: inline-block;
+  width: auto;
+  border: none;
+  border-radius: 4px;
+
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: 0.5s;
+
+  background: #0d6efd;
+  color: #ffffff;
+}
+
+.delete, .close {
+  margin: 0.25rem;
+  padding: 0.5rem 1rem;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+
+  display: inline-block;
+  width: auto;
+  border: none;
+  border-radius: 4px;
+
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: 0.5s;
+
+  background: #f44336;
+  color: #ffffff;
+}
+
+.open {
+  margin: 0.25rem;
+  padding: 0.5rem 1rem;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+
+  display: inline-block;
+  width: auto;
+  border: none;
+  border-radius: 4px;
+
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: 0.5s;
+
+  background: #4CAF50;
+  color: #ffffff;
+}
+
+.edit {
+  margin: 0.25rem;
+  padding: 0.5rem 1rem;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+
+  display: inline-block;
+  width: auto;
+  border: none;
+  border-radius: 4px;
+
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: 0.5s;
+
+  background: #0d6efd;
+  color: #ffffff;
+}
+
+#notice {
+  list-style-type: none;
+
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: #fafafa;
+  width: 70%;
+  margin: 10px auto;
+  padding: 15px;
+}
+
+#todos {
+  list-style-type: none;
+
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: #eeeeee;
+  width: 90%;
+  margin: 10px auto;
+  padding: 15px;
+}
+
+#todos > li {
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: #fafafa;
+  width: 90%;
+  margin: 10px auto;
+  padding: 15px;
+}
+
+div > label {
+  padding: 0.25rem;
+  margin: 0.25rem;
+  width: 100px;
+  display: inline-block;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #262626;
+}
+
+div > span {
+  padding: 0.25rem;
+  margin: 0.25rem;
+  width: 300px;
+  display: inline-block;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-decoration: none;
+  
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #262626;
+}
+
+div > input {
+  padding: 0.25rem;
+  margin: 0.25rem;
+  width: 300px;
+  display: inline-block;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-decoration: none;
+  
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  color: #262626;
+}
+
+div > input[type="date"] {
+  width: 200px;
+  height: 18px;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+div > select {
+  padding: 0.25rem;
+  margin: 0.25rem;
+  width: 150px;
+  height: 29px;
+  display: inline-block;
+  
+  text-align: center;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  color: #262626;
+}
+
+.fix {
+  background: #f1f087;
+}
